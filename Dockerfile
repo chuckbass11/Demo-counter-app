@@ -1,10 +1,13 @@
-FROM maven as build 
+# Stage 1: Build with Maven
+FROM maven:3.8.4-openjdk-11 as build
 WORKDIR /app
 COPY . .
-RUN  mv install
+RUN mvn install
 
-FROM opejdk:11.0
+# Stage 2: Run with OpenJDK
+FROM openjdk:11.0
 WORKDIR /app
-COPY --FROM=BUILD /app/target/Uber.jar/app/
+COPY --from=build /app/target/Uber.jar /app/
 EXPOSE 9090
-CMD [ "Java","-jar","Uber.jar" ]
+CMD ["java", "-jar", "Uber.jar"]
+
