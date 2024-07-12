@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: counter-top-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my-springbootapp
+  template:
+    metadata:
+      labels:
+        app: my-springbootapp
+    spec:
+      containers:
+      - name: myspringboot-container
+        image: chuckbass11/counter-top:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9099
+      
